@@ -1,0 +1,79 @@
+# Cálculo del Máximo Común Divisor
+
+## Cálculo del Máximo Común Divisor de dos números
+
+Vamos a definir una función recursiva para calcular el MCD de dos números utilizando el algorítmo de Euclides https://es.wikipedia.org/wiki/Máximo_común_divisor#Usando_el_algoritmo_de_euclides:
+
+```elixir
+defmodule Fracciones do
+  def maximo_comun_divisor(a, b) do
+    resto = rem(a, b)
+
+    if resto > 0 do
+      maximo_comun_divisor(b, resto)
+    else
+      b
+    end
+  end
+end
+
+a = 42
+b = 56
+mcd = Fracciones.maximo_comun_divisor(a, b)
+IO.puts("El MCD de #{a} y #{b} es #{mcd}")
+```
+
+A continuación vamos a añadir otra función para calcular el MCD de una lista de números.
+
+```elixir
+defmodule Fracciones do
+  def maximo_comun_divisor(a, b) do
+    resto = rem(a, b)
+
+    if resto > 0 do
+      maximo_comun_divisor(b, resto)
+    else
+      b
+    end
+  end
+
+  def maximo_comun_divisor([primero | resto]) do
+    resto
+    |> Enum.reduce(primero, fn a, b -> maximo_comun_divisor(a, b) end)
+  end
+end
+
+cifras = [42, 56, 7]
+mcd = Fracciones.maximo_comun_divisor(cifras)
+IO.puts("El MCD de #{Enum.join(cifras, ", ")} es #{mcd}")
+```
+
+Por último vamos a refactorizar el código y dejar solo la función que calcula el MCD de una lista de números.
+
+```elixir
+defmodule Mathematics do
+  @moduledoc """
+  A module for Maths operations.
+  """
+
+  @doc """
+  Calculates de Greatest Common Divisor of a list of numbers using the Euclidean algorithm.
+
+  ## Examples:
+
+      iex> Mathematics.greatest_common_divisor([42, 56, 7])
+      7
+
+  """
+  def greatest_common_divisor([first | rest]) do
+    Enum.reduce(rest, first, fn a, b -> greatest_common_divisor(a, b) end)
+  end
+
+  defp greatest_common_divisor(a, 0), do: a
+  defp greatest_common_divisor(a, b), do: greatest_common_divisor(b, rem(a, b))
+end
+
+numbers = [42, 56, 7]
+gmd = Mathematics.greatest_common_divisor(numbers)
+IO.puts("The Greatest Common Divisor of #{Enum.join(numbers, ", ")}, is #{gmd}.")
+```
