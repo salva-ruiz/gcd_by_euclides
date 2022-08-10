@@ -7,4 +7,6 @@ Calculates de Greatest Common Divisor of a list of numbers using the Euclidean a
 numbers = [42, 56, 7]
 gmd = Mathematics.greatest_common_divisor(numbers)
 IO.puts("The Greatest Common Divisor of #{Enum.join(numbers, ", ")}, is #{gmd}.")
-```  
+
+# The Greatest Common Divisor of 42, 56, 7, is 7.
+```
